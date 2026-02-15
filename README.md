@@ -1,0 +1,2 @@
+# ai-prompt-splitter
+Project Genesis #10: AI Prompt Splitter. A zero-server, privacy-first context chunker to solve "Lost in the Middle" issues. Multi-language support (i18n) with SEO content bridge. Target Domain: promptsplit.net.
