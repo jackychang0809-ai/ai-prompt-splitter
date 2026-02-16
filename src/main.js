@@ -1,8 +1,9 @@
-// 1. 語系字典定義 (i18n Dictionary)
+// 1. 語系字典定義 (加入 zh-CN 與 trustMsg)
 const translations = {
     'zh-TW': {
         title: 'AI Prompt Splitter',
         desc: 'The Premier Zero-Leak Context Chunker (隱私優先的純前端分割工具)',
+        trustMsg: '🔒 您的資料絕不離開瀏覽器 (100% 本地運算)',
         placeholder: '請貼上長文本...',
         splitBtn: '立即分割 (Split)',
         clearBtn: '清空 (Clear)',
@@ -11,9 +12,22 @@ const translations = {
         copied: '已複製! (Copied)',
         words: '字'
     },
+    'zh-CN': {
+        title: 'AI Prompt Splitter',
+        desc: 'The Premier Zero-Leak Context Chunker (隐私优先的纯前端分割工具)',
+        trustMsg: '🔒 您的数据绝不离开浏览器 (100% 本地运算)',
+        placeholder: '请粘贴长文本...',
+        splitBtn: '立即分割 (Split)',
+        clearBtn: '清空 (Clear)',
+        part: '部分',
+        copy: '复制 (Copy)',
+        copied: '已复制! (Copied)',
+        words: '字'
+    },
     'en': {
         title: 'AI Prompt Splitter',
         desc: 'The Premier Zero-Leak Context Chunker for AI Tasks.',
+        trustMsg: '🔒 Your data never leaves your browser (100% Local Processing)',
         placeholder: 'Paste your long text here...',
         splitBtn: 'Split Now',
         clearBtn: 'Clear',
@@ -25,6 +39,7 @@ const translations = {
     'jp': {
         title: 'AI Prompt Splitter',
         desc: 'The Premier Zero-Leak Context Chunker (プライバシー優先の分割ツール)',
+        trustMsg: '🔒 データはブラウザから送信されません (100% ローカル処理)',
         placeholder: '長いテキストを貼り付けてください...',
         splitBtn: '今すぐ分割',
         clearBtn: 'クリア',
@@ -36,6 +51,7 @@ const translations = {
     'de': {
         title: 'AI Prompt Splitter',
         desc: 'The Premier Zero-Leak Context Chunker (Datenschutz-Splitter)',
+        trustMsg: '🔒 Ihre Daten verlassen niemals Ihren Browser (100% lokale Verarbeitung)',
         placeholder: 'Langen Text hier einfügen...',
         splitBtn: 'Jetzt teilen',
         clearBtn: 'Löschen',
@@ -47,6 +63,7 @@ const translations = {
     'es': {
         title: 'AI Prompt Splitter',
         desc: 'The Premier Zero-Leak Context Chunker (Divisor de privacidad)',
+        trustMsg: '🔒 Sus datos nunca salen de su navegador (Procesamiento 100% local)',
         placeholder: 'Pegue su texto largo aquí...',
         splitBtn: 'Dividir ahora',
         clearBtn: 'Limpiar',
@@ -64,7 +81,8 @@ let currentChunks = [];
 // 3. DOM 元素鎖定
 const ui = {
     title: document.querySelector('h1'),
-    desc: document.querySelector('section p'),
+    desc: document.getElementById('mainDesc'),
+    trustMsg: document.getElementById('trustMsg'),
     input: document.getElementById('inputText'),
     splitBtn: document.getElementById('splitBtn'),
     clearBtn: document.getElementById('clearBtn'),
@@ -72,27 +90,29 @@ const ui = {
     resultArea: document.getElementById('resultArea')
 };
 
-// 4. 語系切換函數
+// 4. 語系切換函數 (極致效能重構)
 function setLanguage(lang) {
     currentLang = lang; 
     const t = translations[lang] || translations['en'];
     
+    // 替換靜態文字
     ui.title.textContent = t.title;
     ui.desc.textContent = t.desc;
+    ui.trustMsg.textContent = t.trustMsg;
     ui.input.placeholder = t.placeholder;
     ui.splitBtn.textContent = t.splitBtn;
     ui.clearBtn.textContent = t.clearBtn;
 
-    // 更新按鈕樣式
+    // 更新按鈕樣式 (使用 data-lang 屬性精準綁定)
     ui.langBtns.forEach(btn => {
-        if (btn.textContent.toLowerCase().includes(lang.split('-')[0]) || 
-            (lang === 'zh-TW' && btn.textContent === '繁中')) {
-            btn.className = 'px-2 py-1 bg-blue-600 text-white rounded transition-colors';
+        if (btn.dataset.lang === lang) {
+            btn.className = 'px-2 py-1 bg-blue-600 text-white rounded transition-colors text-xs font-medium';
         } else {
-            btn.className = 'px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded transition-colors text-gray-700';
+            btn.className = 'px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded transition-colors text-gray-700 text-xs font-medium';
         }
     });
 
+    // 觸發已生成卡片的響應式更新
     if (currentChunks.length > 0) {
         renderChunks(currentChunks);
     }
@@ -101,12 +121,11 @@ function setLanguage(lang) {
 // 5. 綁定語系按鈕事件
 ui.langBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-        const langMap = { 'EN': 'en', '繁中': 'zh-TW', 'JP': 'jp', 'DE': 'de', 'ES': 'es' };
-        setLanguage(langMap[btn.textContent]);
+        setLanguage(btn.dataset.lang);
     });
 });
 
-// 6. 核心分割演算法
+// 6. 核心分割演算法 (Paragraph-Aware)
 function splitText(text, chunkSize = 2000) {
     if (!text.trim()) return [];
 
