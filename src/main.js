@@ -1,4 +1,4 @@
-// 1. 語系字典定義 (加入 zh-CN 與 trustMsg)
+// 1. 語系字典定義 (維持你的原版設定)
 const translations = {
     'zh-TW': {
         title: 'AI Prompt Splitter',
@@ -78,32 +78,32 @@ const translations = {
 let currentLang = 'zh-TW';
 let currentChunks = []; 
 
-// 3. DOM 元素鎖定
+// 3. DOM 元素鎖定 (改用動態獲取，避免找不到元素時報錯)
 const ui = {
-    title: document.querySelector('h1'),
-    desc: document.getElementById('mainDesc'),
-    trustMsg: document.getElementById('trustMsg'),
-    input: document.getElementById('inputText'),
-    splitBtn: document.getElementById('splitBtn'),
-    clearBtn: document.getElementById('clearBtn'),
-    langBtns: document.querySelectorAll('nav button'),
-    resultArea: document.getElementById('resultArea')
+    get title() { return document.querySelector('h1'); },
+    get desc() { return document.getElementById('mainDesc'); },
+    get trustMsg() { return document.getElementById('trustMsg'); },
+    get input() { return document.getElementById('inputText'); },
+    get splitBtn() { return document.getElementById('splitBtn'); },
+    get clearBtn() { return document.getElementById('clearBtn'); },
+    get langBtns() { return document.querySelectorAll('nav button'); },
+    get resultArea() { return document.getElementById('resultArea'); }
 };
 
-// 4. 語系切換函數 (極致效能重構)
+// 4. 語系切換函數 (加入 Null-Safe 防呆機制)
 function setLanguage(lang) {
     currentLang = lang; 
     const t = translations[lang] || translations['en'];
     
-    // 替換靜態文字
-    ui.title.textContent = t.title;
-    ui.desc.textContent = t.desc;
-    ui.trustMsg.textContent = t.trustMsg;
-    ui.input.placeholder = t.placeholder;
-    ui.splitBtn.textContent = t.splitBtn;
-    ui.clearBtn.textContent = t.clearBtn;
+    // 替換靜態文字 (僅在元素存在時執行，確保跨頁面不報錯)
+    if (ui.title) ui.title.textContent = t.title;
+    if (ui.desc) ui.desc.textContent = t.desc;
+    if (ui.trustMsg) ui.trustMsg.textContent = t.trustMsg;
+    if (ui.input) ui.input.placeholder = t.placeholder;
+    if (ui.splitBtn) ui.splitBtn.textContent = t.splitBtn;
+    if (ui.clearBtn) ui.clearBtn.textContent = t.clearBtn;
 
-    // 更新按鈕樣式 (使用 data-lang 屬性精準綁定)
+    // 更新按鈕樣式
     ui.langBtns.forEach(btn => {
         if (btn.dataset.lang === lang) {
             btn.className = 'px-2 py-1 bg-blue-600 text-white rounded transition-colors text-xs font-medium';
@@ -113,7 +113,7 @@ function setLanguage(lang) {
     });
 
     // 觸發已生成卡片的響應式更新
-    if (currentChunks.length > 0) {
+    if (currentChunks.length > 0 && ui.resultArea) {
         renderChunks(currentChunks);
     }
 }
@@ -125,7 +125,7 @@ ui.langBtns.forEach(btn => {
     });
 });
 
-// 6. 核心分割演算法 (Paragraph-Aware)
+// 6. 核心分割演算法 (維持原版邏輯無損)
 function splitText(text, chunkSize = 2000) {
     if (!text.trim()) return [];
 
@@ -157,6 +157,8 @@ function splitText(text, chunkSize = 2000) {
 
 // 7. 結果渲染與一鍵複製功能
 function renderChunks(chunks) {
+    if (!ui.resultArea) return; // 防呆
+    
     ui.resultArea.innerHTML = ''; 
     const t = translations[currentLang]; 
 
@@ -203,22 +205,26 @@ function renderChunks(chunks) {
     });
 }
 
-// 8. 綁定控制按鈕
-ui.splitBtn.addEventListener('click', () => {
-    const rawText = ui.input.value;
-    if (!rawText.trim()) {
-        alert('請先輸入或貼上需要分割的文本。');
-        return;
-    }
-    currentChunks = splitText(rawText, 2000); 
-    renderChunks(currentChunks); 
-});
+// 8. 綁定控制按鈕 (加入防呆)
+if (ui.splitBtn && ui.input) {
+    ui.splitBtn.addEventListener('click', () => {
+        const rawText = ui.input.value;
+        if (!rawText.trim()) {
+            alert('請先輸入或貼上需要分割的文本。');
+            return;
+        }
+        currentChunks = splitText(rawText, 2000); 
+        renderChunks(currentChunks); 
+    });
+}
 
-ui.clearBtn.addEventListener('click', () => {
-    ui.input.value = '';
-    ui.resultArea.innerHTML = ''; 
-    currentChunks = []; 
-});
+if (ui.clearBtn && ui.input && ui.resultArea) {
+    ui.clearBtn.addEventListener('click', () => {
+        ui.input.value = '';
+        ui.resultArea.innerHTML = ''; 
+        currentChunks = []; 
+    });
+}
 
 // 初始化：預設啟動繁體中文
 setLanguage('zh-TW');
