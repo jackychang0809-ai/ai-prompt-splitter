@@ -1,4 +1,4 @@
-// 1. 語系字典定義 (已加入 SEO meta 標籤，並將日文 key 從 jp 修正為 ja 以對齊路由)
+// 1. 語系字典定義 (已整合高槓桿 SEO 戰略版 Meta 標籤)
 const translations = {
     'zh-TW': {
         title: 'AI Prompt Splitter',
@@ -12,8 +12,8 @@ const translations = {
         copied: '已複製! (Copied)',
         words: '字',
         meta: {
-            title: 'AI Prompt Splitter - 隱私優先的長文本分割工具',
-            desc: '專業級 AI 提示詞分割工具，100% 本地運算。解決 ChatGPT 與 Claude 的長文本遺忘痛點，保護隱私不外洩。'
+            title: 'AI 提示詞分割器：100% 瀏覽器本地處理，拒絕隱私外洩 (Zero-Leak)',
+            desc: '專為解決長文本「Lost in the Middle」設計。本機運算不經伺服器，保護企業與個人機密。優化 ChatGPT 與 Claude 的 Token 效率。'
         }
     },
     'zh-CN': {
@@ -28,8 +28,8 @@ const translations = {
         copied: '已复制! (Copied)',
         words: '字',
         meta: {
-            title: 'AI Prompt Splitter - 隐私优先的长文本分割工具',
-            desc: '专业级 AI 提示词分割工具，100% 本地运算。解决 ChatGPT 与 Claude 的长文本遗忘痛点，保护隐私不外泄。'
+            title: 'AI 提示词分割器：100% 浏览器本地处理，拒绝隐私泄露 (Zero-Leak)',
+            desc: '专为解决长文本 “Lost in the Middle” 设计。本机运算不经服务器，保护企业与个人机密。优化 ChatGPT 与 Claude 的 Token 效率。'
         }
     },
     'en': {
@@ -44,8 +44,8 @@ const translations = {
         copied: 'Copied!',
         words: 'chars',
         meta: {
-            title: 'AI Prompt Splitter - Premier Zero-Leak Context Chunker',
-            desc: 'The best tool to split long prompts for ChatGPT & Claude. 100% local processing to ensure data privacy and avoid context loss.'
+            title: 'AI Prompt Splitter: Zero-Leak Context Chunker for LLMs',
+            desc: "Securely split long prompts locally. Prevent data leaks & solve 'Lost in the Middle' in ChatGPT/Claude. 100% Client-side."
         }
     },
     'ja': {
@@ -60,8 +60,8 @@ const translations = {
         copied: 'コピー完了',
         words: '文字',
         meta: {
-            title: 'AI Prompt Splitter - プライバシー優先のプロンプト分割ツール',
-            desc: 'ChatGPTとClaudeのための最適な長文プロンプト分割ツール。100%ローカル処理でデータプライバシーを確保します。'
+            title: 'AIプロンプト分割器：完全ローカル実行のプライバシー保護ツール',
+            desc: '長いプロンプトを安全に分割。データ流出を完全に防ぎ、ChatGPTの文脈理解を最適化します。サーバー保存なし。'
         }
     },
     'de': {
@@ -76,8 +76,8 @@ const translations = {
         copied: 'Kopiert!',
         words: 'Zeichen',
         meta: {
-            title: 'AI Prompt Splitter - Datenschutz-Splitter für KI',
-            desc: 'Das beste Tool zum Aufteilen langer Prompts für ChatGPT & Claude. 100% lokale Verarbeitung zum Schutz der Datenprivatsphäre.'
+            title: 'KI Prompt Splitter: DSGVO-konformer Context Chunker',
+            desc: 'Lange Prompts sicher lokal teilen. Schützen Sie Ihre Daten vor KI-Leaks. 100% Client-seitige Verarbeitung ohne Server.'
         }
     },
     'es': {
@@ -92,8 +92,8 @@ const translations = {
         copied: '¡Copiado!',
         words: 'caracteres',
         meta: {
-            title: 'AI Prompt Splitter - Divisor de texto de privacidad para IA',
-            desc: 'La mejor herramienta para dividir textos largos para ChatGPT y Claude. Procesamiento 100% local para garantizar la privacidad.'
+            title: 'AI Prompt Splitter: Chunker de Contexto Seguro y Zero-Leak',
+            desc: 'Divide prompts largos localmente con total seguridad. Evita fugas de datos y optimiza la ventana de contexto en ChatGPT/Claude.'
         }
     }
 };

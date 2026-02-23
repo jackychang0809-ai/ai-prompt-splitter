@@ -1,4 +1,4 @@
-// 1. 語系字典定義 (加入 zh-CN 與 trustMsg)
+// 1. 語系字典定義 (已加入 SEO meta 標籤，並將日文 key 從 jp 修正為 ja 以對齊路由)
 const translations = {
     'zh-TW': {
         title: 'AI Prompt Splitter',
@@ -10,7 +10,11 @@ const translations = {
         part: '部分',
         copy: '複製 (Copy)',
         copied: '已複製! (Copied)',
-        words: '字'
+        words: '字',
+        meta: {
+            title: 'AI Prompt Splitter - 隱私優先的長文本分割工具',
+            desc: '專業級 AI 提示詞分割工具，100% 本地運算。解決 ChatGPT 與 Claude 的長文本遺忘痛點，保護隱私不外洩。'
+        }
     },
     'zh-CN': {
         title: 'AI Prompt Splitter',
@@ -22,7 +26,11 @@ const translations = {
         part: '部分',
         copy: '复制 (Copy)',
         copied: '已复制! (Copied)',
-        words: '字'
+        words: '字',
+        meta: {
+            title: 'AI Prompt Splitter - 隐私优先的长文本分割工具',
+            desc: '专业级 AI 提示词分割工具，100% 本地运算。解决 ChatGPT 与 Claude 的长文本遗忘痛点，保护隐私不外泄。'
+        }
     },
     'en': {
         title: 'AI Prompt Splitter',
@@ -34,9 +42,13 @@ const translations = {
         part: 'Part',
         copy: 'Copy',
         copied: 'Copied!',
-        words: 'chars'
+        words: 'chars',
+        meta: {
+            title: 'AI Prompt Splitter - Premier Zero-Leak Context Chunker',
+            desc: 'The best tool to split long prompts for ChatGPT & Claude. 100% local processing to ensure data privacy and avoid context loss.'
+        }
     },
-    'jp': {
+    'ja': {
         title: 'AI Prompt Splitter',
         desc: 'The Premier Zero-Leak Context Chunker (プライバシー優先の分割ツール)',
         trustMsg: '🔒 データはブラウザから送信されません (100% ローカル処理)',
@@ -46,7 +58,11 @@ const translations = {
         part: 'セクション',
         copy: 'コピー',
         copied: 'コピー完了',
-        words: '文字'
+        words: '文字',
+        meta: {
+            title: 'AI Prompt Splitter - プライバシー優先のプロンプト分割ツール',
+            desc: 'ChatGPTとClaudeのための最適な長文プロンプト分割ツール。100%ローカル処理でデータプライバシーを確保します。'
+        }
     },
     'de': {
         title: 'AI Prompt Splitter',
@@ -58,7 +74,11 @@ const translations = {
         part: 'Teil',
         copy: 'Kopieren',
         copied: 'Kopiert!',
-        words: 'Zeichen'
+        words: 'Zeichen',
+        meta: {
+            title: 'AI Prompt Splitter - Datenschutz-Splitter für KI',
+            desc: 'Das beste Tool zum Aufteilen langer Prompts für ChatGPT & Claude. 100% lokale Verarbeitung zum Schutz der Datenprivatsphäre.'
+        }
     },
     'es': {
         title: 'AI Prompt Splitter',
@@ -70,42 +90,61 @@ const translations = {
         part: 'Parte',
         copy: 'Copiar',
         copied: '¡Copiado!',
-        words: 'caracteres'
+        words: 'caracteres',
+        meta: {
+            title: 'AI Prompt Splitter - Divisor de texto de privacidad para IA',
+            desc: 'La mejor herramienta para dividir textos largos para ChatGPT y Claude. Procesamiento 100% local para garantizar la privacidad.'
+        }
     }
 };
 
 // 2. 全域狀態 (Global State)
-let currentLang = 'zh-TW';
+let currentLang = 'en'; // 預設改為 en，匹配國際化策略
 let currentChunks = []; 
 
-// 3. DOM 元素鎖定
+// 3. DOM 元素鎖定 (改用動態獲取，避免找不到元素時報錯)
 const ui = {
-    title: document.querySelector('h1'),
-    desc: document.getElementById('mainDesc'),
-    trustMsg: document.getElementById('trustMsg'),
-    input: document.getElementById('inputText'),
-    splitBtn: document.getElementById('splitBtn'),
-    clearBtn: document.getElementById('clearBtn'),
-    langBtns: document.querySelectorAll('nav button'),
-    resultArea: document.getElementById('resultArea')
+    get title() { return document.querySelector('h1'); },
+    get desc() { return document.getElementById('mainDesc'); },
+    get trustMsg() { return document.getElementById('trustMsg'); },
+    get input() { return document.getElementById('inputText'); },
+    get splitBtn() { return document.getElementById('splitBtn'); },
+    get clearBtn() { return document.getElementById('clearBtn'); },
+    get langBtns() { return document.querySelectorAll('nav button'); },
+    get resultArea() { return document.getElementById('resultArea'); }
 };
 
-// 4. 語系切換函數 (極致效能重構)
+// 4. 語系切換函數 (整合動態 SEO Meta 標籤更新)
 function setLanguage(lang) {
     currentLang = lang; 
     const t = translations[lang] || translations['en'];
     
-    // 替換靜態文字
-    ui.title.textContent = t.title;
-    ui.desc.textContent = t.desc;
-    ui.trustMsg.textContent = t.trustMsg;
-    ui.input.placeholder = t.placeholder;
-    ui.splitBtn.textContent = t.splitBtn;
-    ui.clearBtn.textContent = t.clearBtn;
+    // --- 新增：動態更新 SEO Meta 標籤 ---
+    if (t.meta) {
+        document.title = t.meta.title;
+        let metaDesc = document.querySelector('meta[name="description"]');
+        if (!metaDesc) {
+            metaDesc = document.createElement('meta');
+            metaDesc.name = "description";
+            document.head.appendChild(metaDesc);
+        }
+        metaDesc.setAttribute('content', t.meta.desc);
+    }
+    
+    // 替換靜態文字 (僅在元素存在時執行，確保跨頁面不報錯)
+    if (ui.title) ui.title.textContent = t.title;
+    if (ui.desc) ui.desc.textContent = t.desc;
+    if (ui.trustMsg) ui.trustMsg.textContent = t.trustMsg;
+    if (ui.input) ui.input.placeholder = t.placeholder;
+    if (ui.splitBtn) ui.splitBtn.textContent = t.splitBtn;
+    if (ui.clearBtn) ui.clearBtn.textContent = t.clearBtn;
 
-    // 更新按鈕樣式 (使用 data-lang 屬性精準綁定)
+    // 更新按鈕樣式
     ui.langBtns.forEach(btn => {
-        if (btn.dataset.lang === lang) {
+        // 注意：HTML 上的 data-lang 如果是 jp，請記得也要改為 ja
+        const btnLang = btn.dataset.lang === 'jp' ? 'ja' : btn.dataset.lang; 
+        
+        if (btnLang === lang) {
             btn.className = 'px-2 py-1 bg-blue-600 text-white rounded transition-colors text-xs font-medium';
         } else {
             btn.className = 'px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded transition-colors text-gray-700 text-xs font-medium';
@@ -113,19 +152,25 @@ function setLanguage(lang) {
     });
 
     // 觸發已生成卡片的響應式更新
-    if (currentChunks.length > 0) {
+    if (currentChunks.length > 0 && ui.resultArea) {
         renderChunks(currentChunks);
     }
 }
 
-// 5. 綁定語系按鈕事件
+// 5. 綁定語系按鈕事件 (並支援動態修改網址，但不跳轉)
 ui.langBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-        setLanguage(btn.dataset.lang);
+        let lang = btn.dataset.lang;
+        if (lang === 'jp') lang = 'ja'; // 防呆：處理舊版 HTML 可能殘留的 jp
+        
+        setLanguage(lang);
+        
+        // 替換當前網址但不重整頁面，強化 SEO 與分享體驗
+        window.history.pushState({}, '', `/${lang}/`);
     });
 });
 
-// 6. 核心分割演算法 (Paragraph-Aware)
+// 6. 核心分割演算法 (維持原版邏輯無損)
 function splitText(text, chunkSize = 2000) {
     if (!text.trim()) return [];
 
@@ -157,6 +202,8 @@ function splitText(text, chunkSize = 2000) {
 
 // 7. 結果渲染與一鍵複製功能
 function renderChunks(chunks) {
+    if (!ui.resultArea) return; // 防呆
+    
     ui.resultArea.innerHTML = ''; 
     const t = translations[currentLang]; 
 
@@ -203,22 +250,42 @@ function renderChunks(chunks) {
     });
 }
 
-// 8. 綁定控制按鈕
-ui.splitBtn.addEventListener('click', () => {
-    const rawText = ui.input.value;
-    if (!rawText.trim()) {
-        alert('請先輸入或貼上需要分割的文本。');
-        return;
-    }
-    currentChunks = splitText(rawText, 2000); 
-    renderChunks(currentChunks); 
-});
+// 8. 綁定控制按鈕 (加入防呆)
+if (ui.splitBtn && ui.input) {
+    ui.splitBtn.addEventListener('click', () => {
+        const rawText = ui.input.value;
+        if (!rawText.trim()) {
+            alert('請先輸入或貼上需要分割的文本。');
+            return;
+        }
+        currentChunks = splitText(rawText, 2000); 
+        renderChunks(currentChunks); 
+    });
+}
 
-ui.clearBtn.addEventListener('click', () => {
-    ui.input.value = '';
-    ui.resultArea.innerHTML = ''; 
-    currentChunks = []; 
-});
+if (ui.clearBtn && ui.input && ui.resultArea) {
+    ui.clearBtn.addEventListener('click', () => {
+        ui.input.value = '';
+        ui.resultArea.innerHTML = ''; 
+        currentChunks = []; 
+    });
+}
 
-// 初始化：預設啟動繁體中文
-setLanguage('zh-TW');
+// 9. 核心邏輯：URL 路由偵測與初始化
+function initI18nFromUrl() {
+    const path = window.location.pathname; 
+    const segments = path.split('/').filter(p => p); 
+    
+    // 必須與 translations 字典的 Key 完全對應
+    const supportedLangs = ['en', 'de', 'ja', 'zh-TW', 'zh-CN', 'es'];
+    
+    // 判斷網址第一個路徑是否為支援語系，否則預設為 en
+    const detectedLang = segments.length > 0 && supportedLangs.includes(segments[0]) 
+        ? segments[0] 
+        : 'en';
+        
+    setLanguage(detectedLang);
+}
+
+// 系統啟動入口
+initI18nFromUrl();
