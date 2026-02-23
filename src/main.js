@@ -114,12 +114,15 @@ const ui = {
     get resultArea() { return document.getElementById('resultArea'); }
 };
 
-// 4. 語系切換函數 (整合動態 SEO Meta 標籤更新)
+// 4. 語系切換函數 (整合動態 SEO Meta 標籤更新與 HTML lang 同步)
 function setLanguage(lang) {
     currentLang = lang; 
     const t = translations[lang] || translations['en'];
     
-    // --- 新增：動態更新 SEO Meta 標籤 ---
+    // --- 修補一：動態同步 HTML 最外層語系宣告 (SEO 基礎) ---
+    document.documentElement.lang = lang;
+
+    // --- 動態更新 SEO Meta 標籤 ---
     if (t.meta) {
         document.title = t.meta.title;
         let metaDesc = document.querySelector('meta[name="description"]');
