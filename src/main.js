@@ -235,6 +235,14 @@ function renderChunks(chunks) {
             try {
                 await navigator.clipboard.writeText(chunk);
                 
+                // --- 新增：GA4 自訂事件：點擊複製 ---
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    'event': 'click_copy',
+                    'tool_language': currentLang
+                });
+                // ------------------------------------
+                
                 copyBtn.textContent = t.copied; 
                 copyBtn.className = 'copy-btn bg-gray-800 text-white px-3 py-1 rounded text-sm font-medium transition-colors';
                 textArea.select();
@@ -261,6 +269,16 @@ if (ui.splitBtn && ui.input) {
             alert('請先輸入或貼上需要分割的文本。');
             return;
         }
+
+        // --- 新增：GA4 自訂事件：點擊分割 ---
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+            'event': 'click_split',
+            'tool_language': currentLang,
+            'text_length': rawText.length
+        });
+        // ------------------------------------
+
         currentChunks = splitText(rawText, 2000); 
         renderChunks(currentChunks); 
     });
