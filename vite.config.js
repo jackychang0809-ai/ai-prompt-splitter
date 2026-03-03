@@ -1,17 +1,12 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  // v6.0 戰略：僅負責主程式打包。
+  // 靜態頁面已移至 /public/，由 Tailwind CLI 獨立處理，嚴禁在此處註冊。
   build: {
     rollupOptions: {
       input: {
         main: 'index.html',
-        //privacy_leak: 'ai-privacy-zero-leak.html',
-        //chunking: 'paragraph-aware-chunking.html',
-        //costs: 'optimize-ai-token-costs.html',
-        //efficiency: 'ai-workflow-efficiency.html',
-        //context_logic: 'lost-in-the-middle-ai.html',
-        //about: 'about.html',
-        //privacy_policy: 'privacy.html'
       }
     }
   }
