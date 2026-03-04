@@ -5,6 +5,7 @@ const translations = {
         desc: 'The Premier Zero-Leak Context Chunker (隱私優先的純前端分割工具)',
         trustMsg: '🔒 您的資料絕不離開瀏覽器 (100% 本地運算)',
         placeholder: '請貼上長文本...',
+        filePlaceholder: '輸入檔案名稱 (選填，如 main.js)',
         splitBtn: '立即分割 (Split)',
         clearBtn: '清空 (Clear)',
         part: '部分',
@@ -21,6 +22,7 @@ const translations = {
         desc: 'The Premier Zero-Leak Context Chunker (隐私优先的纯前端分割工具)',
         trustMsg: '🔒 您的数据绝不离开浏览器 (100% 本地运算)',
         placeholder: '请粘贴长文本...',
+        filePlaceholder: '输入文件名 (选填，如 main.js)',
         splitBtn: '立即分割 (Split)',
         clearBtn: '清空 (Clear)',
         part: '部分',
@@ -37,6 +39,7 @@ const translations = {
         desc: 'The Premier Zero-Leak Context Chunker for AI Tasks.',
         trustMsg: '🔒 Your data never leaves your browser (100% Local Processing)',
         placeholder: 'Paste your long text here...',
+        filePlaceholder: 'Enter file name (Optional, e.g., main.js)',
         splitBtn: 'Split Now',
         clearBtn: 'Clear',
         part: 'Part',
@@ -53,6 +56,7 @@ const translations = {
         desc: 'The Premier Zero-Leak Context Chunker (プライバシー優先の分割ツール)',
         trustMsg: '🔒 データはブラウザから送信されません (100% ローカル処理)',
         placeholder: '長いテキストを貼り付けてください...',
+        filePlaceholder: 'ファイル名を入力 (任意、例: main.js)',
         splitBtn: '今すぐ分割',
         clearBtn: 'クリア',
         part: 'セクション',
@@ -69,6 +73,7 @@ const translations = {
         desc: 'The Premier Zero-Leak Context Chunker (Datenschutz-Splitter)',
         trustMsg: '🔒 Ihre Daten verlassen niemals Ihren Browser (100% lokale Verarbeitung)',
         placeholder: 'Langen Text hier einfügen...',
+        filePlaceholder: 'Dateiname eingeben (Optional, z. B. main.js)',
         splitBtn: 'Jetzt teilen',
         clearBtn: 'Löschen',
         part: 'Teil',
@@ -85,36 +90,38 @@ const translations = {
         desc: 'The Premier Zero-Leak Context Chunker (Divisor de privacidad)',
         trustMsg: '🔒 Sus datos nunca salen de su navegador (Procesamiento 100% local)',
         placeholder: 'Pegue su texto largo aquí...',
+        filePlaceholder: 'Ingrese el nombre del archivo (Opcional, ej. main.js)',
         splitBtn: 'Dividir ahora',
         clearBtn: 'Limpiar',
         part: 'Parte',
-        copy: 'Copiar',
+        copy: 'Copy',
         copied: '¡Copiado!',
         words: 'caracteres',
         meta: {
             title: 'AI Prompt Splitter: Chunker de Contexto Seguro y Zero-Leak',
-            desc: 'Divide prompts largos localmente con total seguridad. Evita fugas de datos y optimiza la ventana de contexto en ChatGPT/Claude.'
+            desc: 'Divide prompts largos localmente con total seguridad. Evita fugas de datos and optimiza la ventana de contexto en ChatGPT/Claude.'
         }
     }
 };
 
 // 2. 全域狀態 (Global State)
-let currentLang = 'en'; // 預設改為 en，匹配國際化策略
+let currentLang = 'en'; 
 let currentChunks = []; 
 
-// 3. DOM 元素鎖定 (改用動態獲取，避免找不到元素時報錯)
+// 3. DOM 元素鎖定 (加入 fileNameInput 綁定)
 const ui = {
     get title() { return document.querySelector('h1'); },
     get desc() { return document.getElementById('mainDesc'); },
     get trustMsg() { return document.getElementById('trustMsg'); },
     get input() { return document.getElementById('inputText'); },
+    get fileName() { return document.getElementById('fileNameInput'); }, // --- 新增：綁定檔名輸入框 ---
     get splitBtn() { return document.getElementById('splitBtn'); },
     get clearBtn() { return document.getElementById('clearBtn'); },
     get langBtns() { return document.querySelectorAll('nav button'); },
     get resultArea() { return document.getElementById('resultArea'); }
 };
 
-// 4. 語系切換函數 (整合動態 SEO Meta 標籤更新與 HTML lang 同步)
+// 4. 語系切換函數
 function setLanguage(lang) {
     currentLang = lang; 
     const t = translations[lang] || translations['en'];
@@ -139,12 +146,12 @@ function setLanguage(lang) {
     if (ui.desc) ui.desc.textContent = t.desc;
     if (ui.trustMsg) ui.trustMsg.textContent = t.trustMsg;
     if (ui.input) ui.input.placeholder = t.placeholder;
+    if (ui.fileName) ui.fileName.placeholder = t.filePlaceholder; // --- 修正：同步更新檔名提示文字 ---
     if (ui.splitBtn) ui.splitBtn.textContent = t.splitBtn;
     if (ui.clearBtn) ui.clearBtn.textContent = t.clearBtn;
 
     // 更新按鈕樣式
     ui.langBtns.forEach(btn => {
-        // 注意：HTML 上的 data-lang 如果是 jp，請記得也要改為 ja
         const btnLang = btn.dataset.lang === 'jp' ? 'ja' : btn.dataset.lang; 
         
         if (btnLang === lang) {
@@ -164,7 +171,7 @@ function setLanguage(lang) {
 ui.langBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         let lang = btn.dataset.lang;
-        if (lang === 'jp') lang = 'ja'; // 防呆：處理舊版 HTML 可能殘留的 jp
+        if (lang === 'jp') lang = 'ja'; 
         
         setLanguage(lang);
         
@@ -203,9 +210,9 @@ function splitText(text, chunkSize = 2000) {
     return chunks;
 }
 
-// 7. 結果渲染與一鍵複製功能
+// 7. 結果渲染與一鍵複製功能 (整合 PromptSplit_Header)
 function renderChunks(chunks) {
-    if (!ui.resultArea) return; // 防呆
+    if (!ui.resultArea) return; 
     
     ui.resultArea.innerHTML = ''; 
     const t = translations[currentLang]; 
@@ -216,6 +223,7 @@ function renderChunks(chunks) {
         const card = document.createElement('div');
         card.className = 'bg-white p-4 rounded-xl shadow-sm border border-gray-200 mt-4 transition-all hover:shadow-md';
         
+        // 先建立骨架，注意：${chunk} 不直接寫入 innerHTML 以防 HTML 標籤破版
         card.innerHTML = `
             <div class="flex justify-between items-center mb-2">
                 <span class="font-bold text-gray-700 text-sm bg-gray-100 px-2 py-1 rounded">
@@ -225,15 +233,25 @@ function renderChunks(chunks) {
                     ${t.copy}
                 </button>
             </div>
-            <textarea class="w-full h-32 p-3 bg-gray-50 border border-gray-100 rounded-lg text-sm text-gray-600 outline-none resize-none" readonly>${chunk}</textarea>
+            <textarea class="w-full h-32 p-3 bg-gray-50 border border-gray-100 rounded-lg text-sm text-gray-600 outline-none resize-none" readonly></textarea>
         `;
 
         const copyBtn = card.querySelector('.copy-btn');
         const textArea = card.querySelector('textarea');
+        
+        // --- 重要修復：使用 .value 賦值以防止 HTML 標籤（如 </textarea>）破版 ---
+        textArea.value = chunk;
 
         copyBtn.addEventListener('click', async () => {
             try {
-                await navigator.clipboard.writeText(chunk);
+                // --- 新增：脈絡標頭自動注入邏輯 ---
+                const rawFileName = ui.fileName ? ui.fileName.value.trim() : '';
+                const fileName = rawFileName || 'Unnamed'; 
+                
+                const header = `PromptSplit_Header | File: ${fileName} | Part: ${index + 1}/${chunks.length} (Please wait for all parts before analyzing)\n\n`;
+                const contentToCopy = header + chunk;
+
+                await navigator.clipboard.writeText(contentToCopy);
                 
                 // --- 新增：GA4 自訂事件：點擊複製 ---
                 window.dataLayer = window.dataLayer || [];
@@ -241,7 +259,6 @@ function renderChunks(chunks) {
                     'event': 'click_copy',
                     'tool_language': currentLang
                 });
-                // ------------------------------------
                 
                 copyBtn.textContent = t.copied; 
                 copyBtn.className = 'copy-btn bg-gray-800 text-white px-3 py-1 rounded text-sm font-medium transition-colors';
@@ -261,7 +278,7 @@ function renderChunks(chunks) {
     });
 }
 
-// 8. 綁定控制按鈕 (加入防呆)
+// 8. 綁定控制按鈕
 if (ui.splitBtn && ui.input) {
     ui.splitBtn.addEventListener('click', () => {
         const rawText = ui.input.value;
@@ -277,7 +294,6 @@ if (ui.splitBtn && ui.input) {
             'tool_language': currentLang,
             'text_length': rawText.length
         });
-        // ------------------------------------
 
         currentChunks = splitText(rawText, 2000); 
         renderChunks(currentChunks); 
@@ -287,6 +303,7 @@ if (ui.splitBtn && ui.input) {
 if (ui.clearBtn && ui.input && ui.resultArea) {
     ui.clearBtn.addEventListener('click', () => {
         ui.input.value = '';
+        if (ui.fileName) ui.fileName.value = ''; // 清空時一併清空檔名輸入框
         ui.resultArea.innerHTML = ''; 
         currentChunks = []; 
     });
@@ -297,10 +314,8 @@ function initI18nFromUrl() {
     const path = window.location.pathname; 
     const segments = path.split('/').filter(p => p); 
     
-    // 必須與 translations 字典的 Key 完全對應
     const supportedLangs = ['en', 'de', 'ja', 'zh-TW', 'zh-CN', 'es'];
     
-    // 判斷網址第一個路徑是否為支援語系，否則預設為 en
     const detectedLang = segments.length > 0 && supportedLangs.includes(segments[0]) 
         ? segments[0] 
         : 'en';
@@ -308,5 +323,4 @@ function initI18nFromUrl() {
     setLanguage(detectedLang);
 }
 
-// 系統啟動入口
 initI18nFromUrl();
