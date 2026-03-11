@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="">
+    <meta name="description" content="AI Prompt Splitter: The premier zero-leak context chunker. Solve the Lost in the Middle problem with 100% local, zero-server architecture.">
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -13,99 +13,218 @@
     <!-- End Google Tag Manager -->    
     <title>AI Prompt Splitter - The Premier Zero-Leak Context Chunker</title>
     <link rel="canonical" href="https://promptsplit.net/" />
-    <link rel="stylesheet" href="/src/style.css">
+    <link rel="stylesheet" href="/static-style.css?v=20260305">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1712150812514544" crossorigin="anonymous"></script>
 </head>
-<body class="bg-gray-50 text-gray-900 font-sans antialiased flex flex-col min-h-screen">
+<body class="bg-gray-50 text-gray-900 font-sans antialiased flex flex-col min-h-screen selection:bg-blue-200 selection:text-blue-900">
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MBZSKKC6"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    <nav class="bg-white shadow-sm border-b sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
-            <span class="font-black text-blue-600 tracking-tight text-lg">AI Prompt Splitter</span>
+    
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
+                <span class="font-black text-gray-900 tracking-tight text-lg">AI Prompt Splitter</span>
+            </a>
             <div class="flex gap-2 text-xs font-medium">
-                <button data-lang="en" class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded transition-colors text-gray-700">EN</button>
-                <button data-lang="zh-TW" class="px-2 py-1 bg-blue-600 text-white rounded transition-colors">繁中</button>
-                <button data-lang="zh-CN" class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded transition-colors text-gray-700">简中</button>
-                <button data-lang="ja" class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded transition-colors text-gray-700">JP</button>
-                <button data-lang="de" class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded transition-colors text-gray-700">DE</button>
-                <button data-lang="es" class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded transition-colors text-gray-700">ES</button>
+                <button data-lang="en" class="px-2 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors text-gray-700">EN</button>
+                <button data-lang="zh-TW" class="px-2 py-1.5 bg-blue-600 text-white rounded-md transition-colors shadow-sm">繁中</button>
+                <button data-lang="zh-CN" class="px-2 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors text-gray-700">简中</button>
+                <button data-lang="ja" class="px-2 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors text-gray-700">JP</button>
+                <button data-lang="de" class="px-2 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors text-gray-700">DE</button>
+                <button data-lang="es" class="px-2 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors text-gray-700">ES</button>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-4xl mx-auto p-4 space-y-6 mt-8 flex-grow w-full">
-        <section class="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-gray-100">
-            <h1 class="text-2xl md:text-3xl font-black mb-2 text-gray-900 tracking-tight">AI Prompt Splitter</h1>
-            <p class="text-sm text-gray-500 mb-4 font-medium" id="mainDesc">The Premier Zero-Leak Context Chunker (隱私優先的純前端分割工具)</p>
-            
-            <div class="mb-6 inline-block text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-100 shadow-sm transition-all" id="trustMsg">
-                🔒 您的資料絕不離開瀏覽器 (100% 本地運算)
-            </div>
-            <div class="mb-3">
-                <input type="text" id="fileNameInput" placeholder="輸入檔案名稱 (選填，如 main.js)" 
-                       class="w-full md:w-1/2 px-3 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-700 outline-none focus:border-blue-500 transition-colors">
-            </div>
-            <textarea id="inputText" class="w-full h-48 p-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:bg-white outline-none transition-all resize-y" placeholder="請貼上長文本..."></textarea>
-            
-            <div class="mt-4 grid grid-cols-2 gap-4">
-                <button id="splitBtn" class="bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 active:scale-95 transition-all shadow-md hover:shadow-lg">
-                    立即分割 (Split)
-                </button>
-                <button id="clearBtn" class="border-2 border-gray-200 py-4 rounded-xl font-bold hover:bg-gray-50 active:scale-95 transition-all text-gray-600">
-                    清空 (Clear)
-                </button>
+    <main class="flex-grow w-full">
+        <!-- Tier 1: Above the Fold (Core Tool) -->
+        <div class="max-w-4xl mx-auto p-4 mt-8">
+            <section class="bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-gray-200">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl md:text-4xl font-black mb-3 text-gray-900 tracking-tight">AI Prompt Splitter</h1>
+                    <p class="text-base text-gray-500 font-medium" id="mainDesc">The Premier Zero-Leak Context Chunker (隱私優先的純前端分割工具)</p>
+                    
+                    <div class="mt-4 inline-flex items-center gap-2 text-xs font-bold text-emerald-800 bg-emerald-50 px-4 py-2 rounded-full border border-emerald-200 shadow-sm" id="trustMsg">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path></svg>
+                        您的資料絕不離開瀏覽器 (100% 本地運算)
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label for="fileNameInput" class="sr-only">File Name</label>
+                        <input type="text" id="fileNameInput" placeholder="輸入檔案名稱 (選填，如 main.js)" 
+                               class="w-full md:w-1/2 px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all">
+                    </div>
+                    <div>
+                        <label for="inputText" class="sr-only">Input Text</label>
+                        <textarea id="inputText" class="w-full h-56 p-4 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-blue-100 focus:border-blue-500 focus:bg-white outline-none transition-all resize-y leading-relaxed" placeholder="請貼上長文本..."></textarea>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                        <button id="splitBtn" class="bg-blue-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-700 active:scale-[0.98] transition-all shadow-sm hover:shadow-md flex justify-center items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243 4.243 3 3 0 004.243-4.243zm0-5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z"></path></svg>
+                            立即分割 (Split)
+                        </button>
+                        <button id="clearBtn" class="bg-white border-2 border-gray-200 py-4 rounded-xl font-bold text-lg text-gray-700 hover:bg-gray-50 hover:border-gray-300 active:scale-[0.98] transition-all flex justify-center items-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            清空 (Clear)
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dynamic Result Area -->
+            <div id="resultArea" class="space-y-4 mt-6"></div>
+        </div>
+
+        <!-- Tier 2: Value Proposition (Feature Grid) -->
+        <section class="bg-white border-y border-gray-200 mt-12 py-16">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">Enterprise-Grade Prompt Engineering</h2>
+                    <p class="text-gray-500 mt-3 font-medium">Engineered for professionals who demand absolute precision and privacy.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="p-8 rounded-2xl bg-gray-50 border border-gray-100 hover:border-blue-200 hover:shadow-md transition-all">
+                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Zero-Leak Security</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            100% Client-Side processing. Your proprietary code, financial logs, and legal documents never leave your browser's volatile memory (RAM). No databases, no API calls, no server logs.
+                        </p>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="p-8 rounded-2xl bg-gray-50 border border-gray-100 hover:border-blue-200 hover:shadow-md transition-all">
+                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Context Integrity</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Eradicate the "Lost in the Middle" hallucination. Our semantic chunking algorithm preserves paragraph boundaries, ensuring LLMs retain absolute narrative continuity.
+                        </p>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="p-8 rounded-2xl bg-gray-50 border border-gray-100 hover:border-blue-200 hover:shadow-md transition-all">
+                        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Token Optimization</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Maximize your API efficiency. By mathematically distributing your payload into optimized segments, you prevent context window overflows and reduce unnecessary token expenditure.
+                        </p>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <div id="resultArea" class="space-y-4 pb-4"></div>
-        <section class="mt-6 pt-4 border-t border-gray-100 max-w-4xl mx-auto px-4 pb-12">
-            <div class="prose prose-blue max-w-none text-gray-600 text-sm md:text-base leading-relaxed">
-                <h2 class="text-2xl font-black text-gray-900 mb-6">Why Use a Local Prompt Splitter for LLMs?</h2>
-                
-                <p class="mb-4">
-                    In the era of advanced Large Language Models (LLMs) like ChatGPT, Claude, and Gemini, inputting extensive documents often triggers the <strong>"Lost in the Middle"</strong> phenomenon. Models tend to heavily weigh the beginning and end of a prompt while hallucinating or completely ignoring critical data buried in the center. AI Prompt Splitter mathematically chunks your long texts into optimized segments, ensuring 100% contextual retention and maximizing your token efficiency.
-                </p>
-        
-                <h3 class="text-lg font-bold text-gray-800 mt-8 mb-3">The Zero-Leak Privacy Standard</h3>
-                <p class="mb-4">
-                    For professionals handling proprietary code, financial logs, or legal documentation, uploading data to intermediary formatting tools creates an unacceptable attack surface. AI Prompt Splitter is engineered with a strict <strong>Zero-Server Architecture</strong>. 
-                </p>
-                <ul class="list-disc pl-5 mb-6 space-y-2">
-                    <li><strong>100% Client-Side Processing:</strong> Your text is chunked entirely within your browser's volatile memory (RAM).</li>
-                    <li><strong>No Database, No Logs:</strong> We do not collect, store, or transmit your inputs. Once you close the tab, the data is gone.</li>
-                    <li><strong>Enterprise-Grade Compliance:</strong> Safely prepare your data for your approved AI endpoints without violating internal data governance or GDPR regulations.</li>
-                </ul>
-        
-                <h3 class="text-lg font-bold text-gray-800 mt-8 mb-3">How to Split Prompts Securely</h3>
-                <p class="mb-4">
-                    Simply paste your lengthy document into the tool above. Our algorithm automatically detects paragraph breaks to prevent cutting sentences in half, distributing the content into easily copyable chunks. Feed these chunks sequentially to your AI to bypass context window limits and maintain absolute narrative integrity.
-                </p>
-            </div>
+        <!-- Tier 3: Deep Content (SEO Technical Article for AdSense) -->
+        <section class="bg-white py-16 md:py-24">
+            <article class="max-w-3xl mx-auto px-4 text-gray-700 leading-loose">
+                <header class="mb-12">
+                    <h2 class="text-3xl md:text-4xl font-black text-gray-900 tracking-tight mb-4 leading-tight">Solving the "Lost in the Middle" Anomaly with Zero-Server Architecture</h2>
+                    <p class="text-lg text-gray-500 font-medium">A technical deep-dive into context window limitations, data governance, and client-side prompt engineering.</p>
+                </header>
+
+                <div class="space-y-8 text-base md:text-lg">
+                    <p>
+                        In the rapidly evolving landscape of Large Language Models (LLMs) such as OpenAI's GPT-4, Anthropic's Claude, and Google's Gemini, the ability to process massive amounts of text has become a standard benchmark. However, as context windows expand from 8K to 128K and beyond, a critical architectural flaw has emerged within the attention mechanisms of these models: the <strong>"Lost in the Middle"</strong> phenomenon.
+                    </p>
+
+                    <h3 class="text-2xl font-bold text-gray-900 mt-12 mb-4">Understanding the "Lost in the Middle" Anomaly</h3>
+                    <p>
+                        Recent empirical studies on LLM performance reveal a U-shaped curve in information retrieval accuracy. When a model is fed a massive document, it demonstrates high recall for data positioned at the very beginning (<strong>Primacy effect</strong>) and the very end (<strong>Recency effect</strong>) of the prompt. Conversely, critical data points, instructions, or code snippets buried in the middle of the context window are frequently ignored, degraded, or hallucinated.
+                    </p>
+                    <p>
+                        This degradation occurs because the self-attention mechanisms in transformer architectures struggle to uniformly distribute attention weights across tens of thousands of tokens. For developers, researchers, and enterprise users, this means that simply dumping a 50-page PDF or a massive codebase into a single prompt is highly inefficient and prone to catastrophic logical errors.
+                    </p>
+
+                    <h3 class="text-2xl font-bold text-gray-900 mt-12 mb-4">Strategic Token Chunking and the PromptSplit_Header 1.0</h3>
+                    <p>
+                        To bypass this limitation, prompt engineering must evolve from simple text pasting to strategic <strong>Token Chunking</strong>. By mathematically dividing a massive payload into smaller, optimized segments, users can feed information sequentially. This forces the LLM to process and acknowledge each segment as a distinct, high-priority input, effectively resetting the attention weights and ensuring 100% contextual retention.
+                    </p>
+                    <p>
+                        AI Prompt Splitter enhances this process by automatically injecting the proprietary <code>PromptSplit_Header 1.0</code> prefix directive into every generated chunk. The format—<code>PromptSplit_Header | File: [Name] | Part: [X/Y] (Please wait for all parts before analyzing)</code>—acts as a strict constraint. It forces the AI to acknowledge the total segment count and wait for the complete payload before executing any analysis, effectively cracking the context limitation and preventing premature responses.
+                    </p>
+
+                    <h3 class="text-2xl font-bold text-gray-900 mt-12 mb-4">The Threat of Data Exfiltration in Server-Side Tools</h3>
+                    <p>
+                        While the necessity of prompt splitting is clear, the tools available to execute it introduce a severe vulnerability: <strong>Data Exfiltration</strong>. Most online text formatters, PDF-to-text converters, and prompt splitters operate on a server-side architecture. When a user pastes proprietary source code, unreleased financial reports, or sensitive legal contracts into these tools, the data is transmitted via API to a remote server for processing.
+                    </p>
+                    <ul class="list-disc pl-6 space-y-3 my-6 text-gray-700 marker:text-blue-600">
+                        <li><strong>The Attack Surface:</strong> Intermediary servers can be compromised, logging your raw inputs in plain text.</li>
+                        <li><strong>Compliance Violations:</strong> Transmitting Personally Identifiable Information (PII) or Protected Health Information (PHI) to unvetted third-party formatting tools violates GDPR, HIPAA, and strict internal data governance policies.</li>
+                        <li><strong>Shadow AI Risks:</strong> Employees unknowingly leak trade secrets simply by trying to format their data for approved enterprise AI endpoints.</li>
+                    </ul>
+
+                    <h3 class="text-2xl font-bold text-gray-900 mt-12 mb-4">The Zero-Leak Privacy Standard</h3>
+                    <p>
+                        To reconcile the need for advanced prompt chunking with absolute data security, the <strong>Zero-Server Architecture</strong> was developed. AI Prompt Splitter is engineered entirely as a pure frontend Single Page Application (SPA). 
+                    </p>
+                    <p>
+                        When you paste text into the tool, the chunking algorithm executes <strong>100% Client-Side</strong> within your browser's local JavaScript engine. The data is processed exclusively in volatile memory (RAM). There are no backend databases, no API calls, and no server logs. Once the browser tab is closed, the data ceases to exist. This provides cryptographic-level privacy without the overhead of actual cryptography, as the data literally never leaves the host machine.
+                    </p>
+
+                    <h3 class="text-2xl font-bold text-gray-900 mt-12 mb-4">Future-Proofing AI Workflows</h3>
+                    <p>
+                        As AI integration deepens across enterprise sectors, the hygiene of data preparation becomes just as critical as the AI models themselves. By utilizing a local, zero-leak context chunker, professionals can optimize their token expenditure, guarantee narrative integrity, and maintain an impenetrable security posture. Solving the "Lost in the Middle" problem doesn't require compromising your data—it requires smarter, client-side engineering.
+                    </p>
+                </div>
+            </article>
         </section>
     </main>
 
-    <footer class="w-full bg-white border-t border-gray-100 py-8 mt-auto">
-        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-xs font-medium text-gray-500">
-            
-            <div class="mb-6 md:mb-0 tracking-wide text-gray-400">
-                &copy; 2026 AI Prompt Splitter. All rights reserved.
-            </div>
-            
-            <div class="flex flex-wrap justify-center gap-x-8 gap-y-3 mb-6 md:mb-0">
-                <a href="/lost-in-the-middle-ai.html" class="hover:text-blue-600 transition-colors">Context Logic</a>
-                <a href="/de/ai-privacy-zero-leak.html" class="hover:text-blue-600 transition-colors">Zero-Leak Privacy</a>
-                <a href="/paragraph-aware-chunking.html" class="hover:text-blue-600 transition-colors">Smart Splitting</a>
-                <a href="/optimize-ai-token-costs.html" class="hover:text-blue-600 transition-colors">Token Efficiency</a>
-                <a href="/ai-workflow-efficiency.html" class="hover:text-blue-600 transition-colors">Workflow Assets</a>
-            </div>
-            <div class="flex space-x-6">
-                <a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy</a>
-                <a href="/about.html" class="hover:text-blue-600 transition-colors">About Us</a>
-                <a href="mailto:contact@promptsplit.net" class="hover:text-blue-600 transition-colors">Contact</a>
-            </div>
+    <!-- Standardized Professional Footer -->
+    <footer class="w-full bg-white border-t border-gray-200 pt-16 pb-8 mt-auto">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div class="md:col-span-2">
+                    <div class="flex items-center gap-2 mb-4">
+                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path></svg>
+                        <span class="font-black text-gray-900 tracking-tight">AI Prompt Splitter</span>
+                    </div>
+                    <p class="text-sm text-gray-500 leading-relaxed max-w-sm">
+                        The industry standard for secure, client-side prompt engineering. Optimize your LLM context windows without compromising enterprise data privacy.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-gray-900 mb-4 text-sm uppercase tracking-wider">Resources</h4>
+                    <ul class="space-y-3 text-sm text-gray-500 font-medium">
+                        <li><a href="/lost-in-the-middle-ai.html" class="hover:text-blue-600 transition-colors">Context Logic</a></li>
+                        <li><a href="/de/ai-privacy-zero-leak.html" class="hover:text-blue-600 transition-colors">Zero-Leak Privacy</a></li>
+                        <li><a href="/paragraph-aware-chunking.html" class="hover:text-blue-600 transition-colors">Smart Splitting</a></li>
+                        <li><a href="/optimize-ai-token-costs.html" class="hover:text-blue-600 transition-colors">Token Efficiency</a></li>
+                    </ul>
+                </div>
 
+                <div>
+                    <h4 class="font-bold text-gray-900 mb-4 text-sm uppercase tracking-wider">Company</h4>
+                    <ul class="space-y-3 text-sm text-gray-500 font-medium">
+                        <li><a href="/about.html" class="hover:text-blue-600 transition-colors">About Us</a></li>
+                        <li><a href="/privacy.html" class="hover:text-blue-600 transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms.html" class="hover:text-blue-600 transition-colors">Terms of Service</a></li>
+                        <li><a href="mailto:contact@promptsplit.net" class="hover:text-blue-600 transition-colors">Contact Support</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-xs font-medium text-gray-400">
+                    &copy; 2026 AI Prompt Splitter. All rights reserved.
+                </div>
+                <div class="text-xs font-medium text-gray-400 flex gap-4">
+                    <span>100% Client-Side Processing</span>
+                    <span>•</span>
+                    <span>No Server Logs</span>
+                </div>
+            </div>
         </div>
     </footer>
 
