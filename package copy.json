@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npx @tailwindcss/cli -i ./src/style.css -o ./public/static-style.css --minify && vite build",
-    "postbuild": "node build-seo.js",
+    "build": "npx @tailwindcss/cli -i ./src/style.css -o ./public/static-style.css --minify && vite build && node build-seo.js",
     "preview": "vite preview"
   },
   "devDependencies": {
